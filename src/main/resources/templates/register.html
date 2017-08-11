@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Allegro</title>
+    <script type="text/javascript" src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" src="../static/js/classie.js" th:src="@{/js/classie.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <link  rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{~/index}">Allegro</a>
+        </div>
+        <div th:if="${session.User} != null" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a th:href="@{usersQuestionaries} " class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zalogowany jako : <span th:text="${session.name} ?: Niezalogowany ">Niezalogowany</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{~/user/panel}">Panel użytkownika</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{~/user/logout}">Wyloguj</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${session.User} == null" class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a th:href="@{~/login}">Zaloguj</a>
+                </li>
+                <li>
+                    <a th:href="@{~/register}">Zarejestruj</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a>Niezalogowany</a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="jumbotron"></div>
+<div class="container">
+    <div class="container">
+        <div class="row main">
+            <div class="panel-heading">
+            </div>
+            <div class="main-login main-center">
+                <form class="login-group" method="post" action="/user/register.try">
+
+                    <div class="form-group">
+                        <label for="imie" class="cols-sm-2 control-label">Imię</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="imie" id="imie" required="required" placeholder="Wpisz swoje imię"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nazwisko" class="cols-sm-2 control-label">Nazwisko</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="nazwisko" id="nazwisko" required="required" placeholder="Wpisz swoje nazwisko"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="cols-sm-2 control-label">E-mail</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input class="form-control" type="email" id="email" name="email" required="required" placeholder="Wpisz swój e-mail"></input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login" class="cols-sm-2 control-label">Nazwa użytkownika</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="login" id="login"  placeholder="Wpisz swoją nazwę" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="haslo" class="cols-sm-2 control-label">Hasło</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="haslo" id="haslo"  placeholder="Wpisz swoje hasło"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <input type="submit" class="btn btn-primary btn-lg btn-block login-button"></input>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+</body>
+</html>
+
+
+
+
+
