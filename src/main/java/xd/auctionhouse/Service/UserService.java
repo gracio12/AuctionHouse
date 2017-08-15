@@ -24,7 +24,7 @@ public class UserService {
     public User login(User user){
         List<User> list = this.repo.findUser(user);
         for (User us: list) {
-            if(us.getLogin().equals(user.getLogin())&&us.getHaslo().equals(user.getHaslo())){
+            if(us.getLogin().equals(user.getLogin())&&us.getHaslo().equals(this.repo.sha512(user.getHaslo(),"powodzenia"))){
                 return us;
             }
         }

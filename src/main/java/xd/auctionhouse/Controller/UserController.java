@@ -9,6 +9,8 @@ import org.springframework.web.context.request.WebRequest;
 import xd.auctionhouse.Entity.User;
 import xd.auctionhouse.Service.UserService;
 
+import javax.jws.soap.SOAPBinding;
+
 /**
  * Created by OpartyOtaczki on 11.08.2017.
  */
@@ -23,7 +25,7 @@ public class UserController {
         this.userService=userService;
     }
     @PostMapping(value="/register.try")
-    public String registerTry(Model model, User register){
+    public String register(Model model, User register){
         if(userService.addUserToDataBase(register)){
 
             return "redirect:/";
@@ -33,8 +35,9 @@ public class UserController {
             return "register";
         }
     }
+
     @PostMapping(value = "/login")
-    public String loginTry(Model model, User user){
+    public String login(Model model, User user){
         User us=userService.login(user);
         if(us!=null){
             model.addAttribute("name",us.getImie()+ " "+ us.getNazwisko());
@@ -58,10 +61,12 @@ public class UserController {
     public String panel(Model model){
         if(model.containsAttribute("User")) {
             User user = (User) model.asMap().get("User");
+            model.addAttribute("adm", user.getAdmin());
             return "index";
         }
         else
             return "error";
     }
+
 
 }

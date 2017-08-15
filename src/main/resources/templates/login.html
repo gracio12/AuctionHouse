@@ -49,18 +49,23 @@
     </div>
 </nav>
 <div class="jumbotron"></div>
-<div th:if="${session.User} == null" class="container">
-    <div class="col-md-12"><form class="login-group" method="post" action="/user/login">
-
-        <div class="form-group">
-            <label for="login" class="cols-sm-2 control-label">Nazwa użytkownika</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="login" id="login"  placeholder="Wpisz swoją nazwę" required="required"/>
-                </div>
+    <div class="centered">
+        <div class="container" th:if="${session.User} == null">
+            <div class="col-lg-4 col-xs-12">
+                <h1 class="text-center main-title">Logowanie</h1>
             </div>
-        </div>
+                    <div class="content col-lg-4 col-xs-12">
+                        <form class="login-group" method="post" action="/user/login">
+
+                    <div class="form-group">
+                        <label for="login" class="cols-sm-2 control-label">Nazwa użytkownika</label>
+                        <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="login" id="login"  placeholder="Wpisz swoją nazwę" required="required"/>
+                        </div>
+                        </div>
+                    </div>
         <div class="form-group">
             <label for="haslo" class="cols-sm-2 control-label">Hasło</label>
             <div class="cols-sm-10">
@@ -76,7 +81,7 @@
         </div>
 
     </form>
-    </div>
+    </div></div>
 </div>
 
 </body>
