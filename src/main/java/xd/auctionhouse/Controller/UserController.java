@@ -10,15 +10,19 @@ import xd.auctionhouse.Entity.User;
 import xd.auctionhouse.Service.UserService;
 
 import javax.jws.soap.SOAPBinding;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by OpartyOtaczki on 11.08.2017.
  */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes({"name","User"})
+@SessionAttributes({"name","User","adm"})
 public class UserController {
     private UserService userService;
+
 
     @Autowired
     UserController(UserService userService){

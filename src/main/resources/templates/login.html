@@ -21,12 +21,15 @@
             <a class="navbar-brand" th:href="@{~/index}">Allegro</a>
         </div>
         <div th:if="${session.User} != null" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a th:href="@{/auction/search}">Aukcje</a>
+                </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a th:href="@{usersQuestionaries} " class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zalogowany jako : <span th:text="${session.name} ?: Niezalogowany ">Niezalogowany</span> <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zalogowany jako : <span th:text="${session.name} ?: Niezalogowany ">Niezalogowany</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{~/user/panel}">Panel użytkownika</a></li>
-                        <li role="separator" class="divider"></li>
                         <li><a th:href="@{~/user/logout}">Wyloguj</a></li>
                     </ul>
                 </li>
@@ -39,6 +42,9 @@
                 </li>
                 <li>
                     <a th:href="@{~/register}">Zarejestruj</a>
+                </li>
+                <li>
+                    <a th:href="@{~/auction}">Aukcje</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

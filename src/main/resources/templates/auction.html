@@ -63,9 +63,25 @@
 </nav>
 <div class="jumbotron"></div>
 <div class="container">
-    <div class="col-md-12"><center>Piękna strona</center></div>
-
+    <table id="table_id" class="display">
+        <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Cena</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ak : ${aukcje}">
+            <td th:text="${ak.nazwa}">nazwa</td>
+            <td th:text="${ak.cena_aktualna}">cena</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
 </body>
 </html>
