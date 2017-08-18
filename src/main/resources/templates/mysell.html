@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
     <link  rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/jquery.dataTables.css" th:href="@{/css/jquery.dataTables.css}"/>
 
     <script type="text/javascript" charset="utf8" src="../static/js/jquery.dataTables.js" th:src="@{/js/jquery.dataTables.js}" ></script>
 
@@ -70,9 +70,56 @@
 </nav>
 <div class="jumbotron"></div>
 <div class="container">
-    <div class="col-md-12"><center>Piękna strona</center></div>
 
+    <a href="#" th:href="@{~/auction/new}" class="btn btn-info btn-lg" style="text-align:left; padding-left:6px">&nbsp; Dodaj nową aukcje</a>
+    &nbsp;
+    <table id="table_id" class="display">
+        <thead>
+        <tr>
+            <th>Miniaturka</th>
+            <th>Nazwa</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Cena</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ak : ${sprzedaz}">
+            <td><img src="http://placehold.it/320x200"/></td>
+            <td th:text="${ak.nazwa}">nazwa</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td th:text="${ak.cena_aktualna}">cena</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
 </body>
 </html>

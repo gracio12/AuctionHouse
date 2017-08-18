@@ -23,7 +23,10 @@
         <div th:if="${session.User} != null" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a th:href="@{/auction/search}">Aukcje</a>
+                    <a th:href="@{~/auction/search}">Szukaj</a>
+                </li>
+                <li>
+                    <a th:href="@{~/auction/category}">Kategorie</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -46,7 +49,10 @@
                     <a th:href="@{~/register}">Zarejestruj</a>
                 </li>
                 <li>
-                    <a th:href="@{~/auction}">Aukcje</a>
+                    <a th:href="@{~/auction/search}">Szukaj</a>
+                </li>
+                <li>
+                    <a th:href="@{~/auction/category}">Kategorie</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

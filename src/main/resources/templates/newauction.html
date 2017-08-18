@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
     <link  rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/jquery.dataTables.css" th:href="@{/css/jquery.dataTables.css}"/>
 
     <script type="text/javascript" charset="utf8" src="../static/js/jquery.dataTables.js" th:src="@{/js/jquery.dataTables.js}" ></script>
 
@@ -70,9 +70,23 @@
 </nav>
 <div class="jumbotron"></div>
 <div class="container">
-    <div class="col-md-12"><center>Piękna strona</center></div>
 
+    <div class="col-xs-6 col-sm-3">
+        <h5>Kategorie</h5>
+        <a class="btn btn-primary btn-select">
+            <input type="hidden" class="btn-select-input" id="" name="" value="" />
+            <span class="btn-select-value">Wybierz</span>
+            <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+            <ul th:each="ak : ${kategorie}">
+                <li th:text="${ak.opis}">opcje</li>
+            </ul>
+        </a>
+    </div>
 </div>
-
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
 </body>
 </html>

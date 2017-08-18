@@ -34,4 +34,31 @@ public class AuctionRepository {
         return ListaObiektow;
     }
 
+    public List<Auction> getAllSell(int g) {
+        String query = "select id_aukcji, nazwa, opis, cena_aktualna from aukcja where id_uzytk="+g+";";
+        List<Auction> ListaObiektow = new ArrayList<Auction>();
+        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
+        for (Map tabWierszy : wiersze) {
+            Auction obiekt = new Auction();
+            obiekt.setId_aukcji(Integer.parseInt(String.valueOf(tabWierszy.get("id_aukcji"))));
+            obiekt.setNazwa(String.valueOf(tabWierszy.get("nazwa")));
+            obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
+            obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
+            ListaObiektow.add(obiekt);
+        }
+        return ListaObiektow;
+    }
+    public List<Category> getAllCat() {
+        String query = "select id_kat,opis from kategorie;";
+        List<Category> ListaObiektow = new ArrayList<Category>();
+        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
+        for (Map tabWierszy : wiersze) {
+            Category obiekt = new Category();
+            obiekt.setId_kat(Integer.parseInt(String.valueOf(tabWierszy.get("id_kat"))));
+            obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
+            ListaObiektow.add(obiekt);
+        }
+        return ListaObiektow;
+    }
+
 }
