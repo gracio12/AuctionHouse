@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by OpartyOtaczki on 18.08.2017.
  */
-@Repository
 public class Category {
     private int id_kat;
     private String opis;

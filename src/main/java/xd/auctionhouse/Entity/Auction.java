@@ -1,5 +1,7 @@
 package xd.auctionhouse.Entity;
 
+import java.util.Date;
+
 /**
  * Created by OpartyOtaczki on 15.08.2017.
  */
@@ -8,18 +10,24 @@ public class Auction {
     private String nazwa;
     private String opis;
     private double cena_aktualna;
+    private String do_konca;
+    private boolean zakonczona;
+    private int ilosc;
+
 
     public Auction() {
     }
 
-    public Auction(int id_aukcji, String nazwa, String opis, double cena_aktualna) {
-        this.id_aukcji = id_aukcji;
+    public Auction(String nazwa, String opis, double cena_aktualna, String do_konca, int ilosc) {
         this.nazwa = nazwa;
         this.opis = opis;
         this.cena_aktualna = cena_aktualna;
+        this.do_konca = do_konca;
+        this.ilosc = ilosc;
     }
 
     public int getId_aukcji() {
+
         return id_aukcji;
     }
 
@@ -49,5 +57,29 @@ public class Auction {
 
     public void setCena_aktualna(double cena_aktualna) {
         this.cena_aktualna = cena_aktualna;
+    }
+
+    public String getDo_konca() {
+        return do_konca;
+    }
+
+    public void setDo_konca(String do_konca) {
+        this.do_konca = do_konca;
+    }
+
+    public boolean isZakonczona() {
+        return zakonczona;
+    }
+
+    public void setZakonczona(boolean zakonczona) {
+        this.zakonczona = zakonczona;
+    }
+
+    public int getIlosc() {
+        return ilosc;
+    }
+
+    public void setIlosc(int ilosc) {
+        this.ilosc = ilosc;
     }
 }

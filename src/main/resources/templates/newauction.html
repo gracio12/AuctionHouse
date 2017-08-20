@@ -72,15 +72,20 @@
 <div class="container">
 
     <div class="col-xs-6 col-sm-3">
-        <h5>Kategorie</h5>
-        <a class="btn btn-primary btn-select">
-            <input type="hidden" class="btn-select-input" id="" name="" value="" />
-            <span class="btn-select-value">Wybierz</span>
-            <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
-            <ul th:each="ak : ${kategorie}">
-                <li th:text="${ak.opis}">opcje</li>
-            </ul>
-        </a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Kategoria</th>
+                <th>Wybierz</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ak : ${kategorie}">
+                <td th:text="${ak.opis}">nazwa</td>
+                <td><a th:href="@{/auction/new/} + ${ak.id_kat}">>></a></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <script>
