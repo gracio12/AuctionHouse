@@ -34,7 +34,7 @@ public class AuctionRepository {
     }
 
     public List<Auction> getAllSell(int g) {
-        String query = "select id_aukcji, nazwa, opis, cena_aktualna from aukcja where id_uzytk="+g+";";
+        String query = "select id_aukcji, nazwa, opis, do_konca,cena_aktualna from aukcja where id_uzytk="+g+";";
         List<Auction> ListaObiektow = new ArrayList<Auction>();
         List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
         for (Map tabWierszy : wiersze) {
@@ -42,6 +42,7 @@ public class AuctionRepository {
             obiekt.setId_aukcji(Integer.parseInt(String.valueOf(tabWierszy.get("id_aukcji"))));
             obiekt.setNazwa(String.valueOf(tabWierszy.get("nazwa")));
             obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
+            obiekt.setData(String.valueOf((tabWierszy.get("do_konca"))));
             obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
             ListaObiektow.add(obiekt);
         }
@@ -66,18 +67,28 @@ public class AuctionRepository {
         for (Map tabWierszy : wiersze) {
             Parameter obiekt = new Parameter();
             obiekt.setId_param(Integer.parseInt(String.valueOf(tabWierszy.get("id_param"))));
-            obiekt.setNazwa(String.valueOf((tabWierszy.get("opis"))));
+            obiekt.setNazwa(String.valueOf((tabWierszy.get("nazwa"))));
             ListaObiektow.add(obiekt);
         }
         return ListaObiektow;
     }
-    public void addNewAuction(Auction auction,int i,int id){
+    public int addNewAuction(Auction auction,int i,int id){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_WEEK, 7);
+        calendar.add(Calendar.DAY_OF_WEEK, auction.getDo_konca() );
         Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
         data.getJdbcTemplate().update("INSERT into aukcja (nazwa,opis,cena_aktualna,do_konca,ilosc,id_uzytk,kategoria) values (?,?,?,?,?,?,?)"
                 , auction.getNazwa(),auction.getOpis(),auction.getCena_aktualna(),timestamp,auction.getIlosc(),i,id);
+        String sql = "select MAX(id_aukcji) from aukcja;";
+        return data.getJdbcTemplate().queryForObject(sql, Integer.class);
+    }
+
+
+
+    // do zrobienia pętla która doda dużo parametrów albo nwm coś w tym stylu
+    public void addNewAuctionParam(Parameter param,int id,int aukcja){
+        data.getJdbcTemplate().update("INSERT into aukcja (nazwa,opis,cena_aktualna,do_konca,ilosc,id_uzytk,kategoria) values (?,?,?,?,?,?,?)"
+                , param.getNazwa(),id);
     }
 
 }

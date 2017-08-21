@@ -10,20 +10,31 @@ public class Auction {
     private String nazwa;
     private String opis;
     private double cena_aktualna;
-    private String do_konca;
+    private int do_konca;
     private boolean zakonczona;
     private int ilosc;
+    private String data;
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public Auction() {
     }
 
-    public Auction(String nazwa, String opis, double cena_aktualna, String do_konca, int ilosc) {
+    public Auction(int id_aukcji, String nazwa, String opis, double cena_aktualna, int do_konca, boolean zakonczona, int ilosc, String data) {
+        this.id_aukcji = id_aukcji;
         this.nazwa = nazwa;
         this.opis = opis;
         this.cena_aktualna = cena_aktualna;
         this.do_konca = do_konca;
+        this.zakonczona = zakonczona;
         this.ilosc = ilosc;
+        this.data = data;
     }
 
     public int getId_aukcji() {
@@ -59,11 +70,11 @@ public class Auction {
         this.cena_aktualna = cena_aktualna;
     }
 
-    public String getDo_konca() {
+    public int getDo_konca() {
         return do_konca;
     }
 
-    public void setDo_konca(String do_konca) {
+    public void setDo_konca(int do_konca) {
         this.do_konca = do_konca;
     }
 

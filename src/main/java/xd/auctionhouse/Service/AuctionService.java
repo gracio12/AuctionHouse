@@ -23,5 +23,6 @@ public class AuctionService {
     public List<Auction> getAllSell(int g){return this.arepo.getAllSell(g);}
     public List<Category> getAllCat(){return this.arepo.getAllCat();}
     public List<Parameter> getAllCatParam(int id){return this.arepo.getAllCatParam(id);}
-    public void addNewAuction(Auction auction,int i,int id){this.arepo.addNewAuction(auction,i,id);}
+    public int addNewAuction(Auction auction,int i,int id){return this.arepo.addNewAuction(auction,i,id);}
+    public void addNewAuctionParam(Parameter parameter,int id,int aukcja){this.arepo.addNewAuctionParam(parameter,id,aukcja);}
 }

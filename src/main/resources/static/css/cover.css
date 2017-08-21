@@ -27,12 +27,12 @@ a:hover {
 html,
 body {
     height: 100%;
-    background-color: #ffffff;
+    background-color: #121212;
 }
 body {
     color: #fff;
     text-align: center;
-    text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, 0.5);
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -132,30 +132,55 @@ body {
 
 @media (min-width: 40em) {
     /* Pull out the header and footer */
-    .masthead {
-        position: fixed;
-        top: 0;
-    }
+
     .mastfoot {
-        position: fixed;
-        bottom: 0;
+        position: relative;;
     }
     /* Start the vertical centering */
     .site-wrapper-inner {
-        vertical-align: middle;
+        vertical-align: top;
     }
     /* Handle the widths */
-    .masthead,
-    .mastfoot,
-    .cover-container {
-        width: 100%; /* Must be percentage or pixels for horizontal alignment */
-    }
+
 }
 
-@media (min-width: 95em) {
+@media (min-width: 95rem) {
     .masthead,
     .mastfoot,
     .cover-container {
         width: 90rem;
     }
+}
+
+#myInput {
+    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+    text-align: left; /* Left-align text */
+    padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
 }

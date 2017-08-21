@@ -1,100 +1,147 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Allegro - logowanie</title>
-    <script type="text/javascript" src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
-    <script type="text/javascript" src="../static/js/classie.js" th:src="@{/js/classie.js}"></script>
-    <script type="text/javascript" src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-    <link  rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+    <title>Allegro</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/cover.css" th:href="@{/css/cover.css}"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    <script type="text/javascript" charset="utf8" src="../static/js/skrypt.js" th:src="@{/js/skrypt.js}" ></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" th:href="@{~/index}">Allegro</a>
-        </div>
-        <div th:if="${session.User} != null" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a th:href="@{~/auction/search}">Szukaj</a>
-                </li>
-                <li>
-                    <a th:href="@{~/auction/category}">Kategorie</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zalogowany jako : <span th:text="${session.name} ?: Niezalogowany ">Niezalogowany</span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{~/user/logout}">Wyloguj</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div th:if="${session.User} == null" class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a th:href="@{~/login}">Zaloguj</a>
-                </li>
-                <li>
-                    <a th:href="@{~/register}">Zarejestruj</a>
-                </li>
-                <li>
-                    <a th:href="@{~/auction/search}">Szukaj</a>
-                </li>
-                <li>
-                    <a th:href="@{~/auction/category}">Kategorie</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a>Niezalogowany</a></li>
-            </ul>
+<div class="site-wrapper bg-inverse">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div class="masthead clearfix bg-inverse">
+                <div class="inner">
+                    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+                        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Allegro</a>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul th:if="${session.User} != null" class="navbar-nav">
+                                <li class="nav-item active">
+                                    <a class="nav-link" th:href="@{~/auction/search}">Szukaj <span class="sr-only">(current)</span></a>
+                                </li>
 
-        </div>
-    </div>
-</nav>
-<div class="jumbotron"></div>
-    <div class="centered">
-        <div class="container" th:if="${session.User} == null">
-            <div class="col-lg-4 col-xs-12">
-                <h1 class="text-center main-title">Logowanie</h1>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{~/auction/category}">Kategorie</a>
+                                </li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zalogowany jako
+                                        : <span th:text="${session.name} ?: Niezalogowany ">Niezalogowany</span> <span
+                                                class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a th:if="${adm}==true" class="dropdown-item" th:href="@{~/user/panel}">Panel
+                                            administratora</a>
+                                        <a class="dropdown-item" th:href="@{~/auction/mysell}">Moja sprzedaż</a>
+                                        <a class="dropdown-item" th:href="@{~/auction/mybuy}">Moje kupno</a>
+                                        <a role="separator" class="divider"></a>
+                                        <a class="dropdown-item" th:href="@{~/user/logout}">Wyloguj</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul th:if="${session.User} == null" class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{~/login}">Zaloguj</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{~/register}">Zarejestruj</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" th:href="@{~/auction/search}">Szukaj <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{~/auction/category}">Kategorie</a>
+                                </li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li>&nbsp;</li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink"
+                                       aria-haspopup="true" aria-expanded="false">Zalogowany jako
+                                        : Niezalogowany <span class="caret"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             </div>
+
+            <div class="inner cover"><center>
+                <div class="container" th:if="${session.User} == null">
+                    <div class="col-lg-4 col-xs-12">
+                        <h1 class="text-center main-title">Logowanie</h1>
+                    </div>
                     <div class="content col-lg-4 col-xs-12">
                         <form class="login-group" method="post" action="/user/login">
 
-                    <div class="form-group">
-                        <label for="login" class="cols-sm-2 control-label">Nazwa użytkownika</label>
-                        <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="login" id="login"  placeholder="Wpisz swoją nazwę" required="required"/>
-                        </div>
-                        </div>
-                    </div>
-        <div class="form-group">
-            <label for="haslo" class="cols-sm-2 control-label">Hasło</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" class="form-control" name="haslo" id="haslo"  placeholder="Wpisz swoje hasło"/>
+                            <div class="form-group">
+                                <label for="login" class="cols-sm-2 control-label">Nazwa użytkownika</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="login" id="login"  placeholder="Wpisz swoją nazwę" required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="haslo" class="cols-sm-2 control-label">Hasło</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" name="haslo" id="haslo"  placeholder="Wpisz swoje hasło"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <input type="submit" class="btn btn-primary btn-lg btn-block login-button"></input>
+                            </div>
+
+                        </form>
+                    </div></div></center>
+            </div>
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Strona by gracio12</p>
                 </div>
             </div>
+
         </div>
 
-        <div class="form-group ">
-            <input type="submit" class="btn btn-primary btn-lg btn-block login-button"></input>
-        </div>
+    </div>
 
-    </form>
-    </div></div>
 </div>
-
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 </body>
 </html>

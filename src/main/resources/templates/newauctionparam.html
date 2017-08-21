@@ -5,17 +5,17 @@
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
     <link rel="stylesheet" type="text/css" href="../static/css/cover.css" th:href="@{/css/cover.css}"/>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
     <script type="text/javascript" charset="utf8" src="../static/js/skrypt.js" th:src="@{/js/skrypt.js}" ></script>
 </head>
 <body>
-
 <div class="site-wrapper bg-inverse">
     <div class="site-wrapper-inner">
         <div class="cover-container">
-
             <div class="masthead clearfix bg-inverse">
                 <div class="inner">
                     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
@@ -89,28 +89,30 @@
 
             <div class="inner cover">
                 <div class="row-sm">
-                <center>
-                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Szukaj po nazwie"/>
-                    <table id="myTable" class="table table-striped table-inverse table-bordered">
-                        <thead class="thead-default">
-                        <tr>
-                            <th>#</th>
-                            <th>Nazwa</th>
-                            <th>Do końca</th>
-                            <th>Cena</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="ak : ${aukcje}">
-                            <th width="320" height="200" scope="row"><img src="http://placehold.it/320x200"/></th>
-                            <td><a th:text="${ak.nazwa}" th:href="@{/auction/item/} + ${ak.id_aukcji}">nazwa</a></td>
-                            <td th:text="${ak.data}">dokonca</td>
-                            <td th:text="${ak.cena_aktualna}">cena</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </center>
+                    <form method="post" action="/auction/addparam">
+                        <table class="table table-striped table-inverse table-bordered">
+                            <thead class="thead-default">
+                            <tr>
+                                <th>Parametry</th>
+                                <th>Wybierz</th>
+                                <th>Wpisz</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ak : ${parametry}">
+                                <!--<td th:text="${ak.id_param}">nazwa</td>-->
+                                <td th:text="${ak.nazwa}">opis</td>
+                                <td><input type="checkbox" id="yourBox" /></td>
+                                <td><input type="text" id="yourText" disabled="disabled" /></td>
+                            </tr>
+                            </tbody>
+                        </table>
 
+
+                        <p class="lead">
+                            <button name="send" id="submit" class="btn btn-lg btn-secondary" value="Następny krok">Zakończ</button>
+                        </p>
+                    </form>
                 </div>
             </div>
 
@@ -125,6 +127,13 @@
     </div>
 
 </div>
+
+<script>
+    document.getElementById('yourBox').onchange = function() {
+        document.getElementById('yourText').disabled = !this.checked;
+    };
+</script>
+
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
