@@ -24,6 +24,7 @@ public class AuctionController {
     private int id_kat;
     private int aukcja;
     private List<Parameter> param;
+    private int id_a;
 
     @Autowired
     public AuctionController(AuctionService ah) {
@@ -99,9 +100,19 @@ public class AuctionController {
 
     @GetMapping(value = "/item/{id}")
     public String stronaItem(Model model, @PathVariable int id) {
+            id_a=id;
             model.addAttribute("auk", ah.getAuction(id));
             model.addAttribute("oferty", ah.getAllOff(id));
+            model.addAttribute("kat",ah.getAllCateg(id));
             return "item";
+    }
+
+    @PostMapping(value = "/addoff")
+    public String dodajoferte(Model model, @RequestParam("oferta")int ilosc, @SessionAttribute("User") User user){
+        if (model.containsAttribute("User")) {
+               ah.addNewOffer(user.getId_uzytk(),ilosc,id_a);
+            return "redirect:/auction/item/"+id_a;
+        } else return "redirect:/login";
     }
 
 }

@@ -12,62 +12,91 @@
 
             <div class="inner cover">
                 <div class="centered">
-                        <div class="col-lg-6 col-xs-12">
-                            <div class="row">
+                    <div class="col-lg-6 col-xs-12">
+                        <div class="row">
                             <h1><span th:text="${auk[0].nazwa}"></span></h1>
-                            </div>
-                            <div class="row">
+                        </div>
+                        <div class="row">
                             <img src="http://placehold.it/320x200"/>
-                            </div>
                         </div>
-                        <div class="col-lg-6 col-xs-12">
-                            <div class="row"> <input type="text" th:value="${auk[0].ilosc}"></input></div>
-                            <div class="row">
-                                <button th:if="${session.User} != null" class="btn btn-warning" value="Kup teraz">Kup teraz</button>
-                                <span th:if="${session.User} == null">Zaloguj się aby wykonać akcje.</span>
-                            </div>
-                            <div class="row">&nbsp;</div>
-                            <div class="row">
-                                <h3><span th:text="${auk[0].data}"></span></h3>
-                            </div>
+                    </div>
+                    <div class="col-lg-6 col-xs-12">
+                        <div th:if="${auk[0].zakonczona}!=true">
+
+                            <form action="/auction/addoff" method="post">
+                                <div class="row"><h1><span th:text="${auk[0].cena_aktualna}"></span></h1>
+                                    <h1>zł</h1></div>
+                                <div class="row"><input type="text" name="oferta" th:value="${auk[0].ilosc}"></input>
+                                </div>
+                                <div class="row">Ilość dostepnych sztuk:<span th:text="${auk[0].ilosc}"></span></div>
+                                <div class="row">
+                                    <button th:if="${session.User} != null" class="btn btn-warning" value="Kup teraz">
+                                        Kup teraz
+                                    </button>
+                                    <span th:if="${session.User} == null">Zaloguj się aby wykonać akcje.</span>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <h3><span th:text="${auk[0].data}"></span></h3>
+                                </div>
+                            </form>
+
                         </div>
+                        <div th:if="${auk[0].zakonczona}==true">
+                            <h1>Aukcja zakończona.</h1>
+                        </div>
+                    </div>
                 </div>
                 <div class="centered">
                     <div class="col-lg-12 col-xs-12">
-                        <table>
+                        <table class="table" name="table" id="table">
+                            <thead class="thead-default">
                             <tr>
-                                Parametry
+                                <th>Parametry</th>
+                                <th></th>
                             </tr>
-                            <td>
-                                jojojo
-                            </td>
+                            </thead>
+                            <tbody>
+                            <tr th:each="akaa : ${kat}">
+                                <td th:text="${akaa.data_oferty}">jkjkjk</td>
+                                <td th:text="${akaa.login}">hjhjh</td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="centered" >
-                    <div class="col-lg-12 col-xs-12" >
-                        <h1 ><span th:text="${auk[0].opis}"></span></h1>
+                <div class="centered">
+                    <div class="col-lg-12 col-xs-12">
+                        <div class="card card-inverse" style="background-color: #414141; border-color: #ffffff;">
+                            <div class="card-block">
+                                <h4 th:text="${auk[0].opis}"></h4>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="centered">
-                <div class="col-lg-12 col-xs-12">
-                    <table id="myTable2" class="table table-striped table-inverse table-bordered">
-                        <thead class="thead-default">
-                        <tr>
-                            <th>Użytkownik</th>
-                            <th>Oferta</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="ak : ${oferty}">
+                    <div class="col-lg-12 col-xs-12">
 
-                            <td><a th:text="${ak.login}">nazwa</a></td>
-                            <td th:text="${ak.data_oferty}">cena</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <table id="myTable2" class="table table-striped table-inverse table-bordered">
+                            <thead class="thead-default">
+                            <tr>
+                                <th>Użytkownik</th>
+                                <th>Ilość</th>
+                                <th>Data oferty</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ak : ${oferty}">
+
+                                <td><a th:text="${ak.login}">nazwa</a></td>
+                                <td th:text="${ak.ilosc}">il</td>
+                                <td th:text="${ak.data_oferty}">data</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             </div>
 
             <!--/*/ <th:block th:include="fragmenty/footer :: foot"></th:block> /*/-->

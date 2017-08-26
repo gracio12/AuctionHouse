@@ -26,4 +26,6 @@ public class AuctionService {
     public void addNewAuctionParam(Parameter parameter, String kater, int aukcja){this.arepo.addNewAuctionParam(parameter,kater,aukcja);}
     public List<Off> getAllOff(int aukcja){return this.arepo.getAllOff(aukcja);}
     public List<Auction> getAuction(int id){return this.arepo.getAuction(id);}
+    public List<Off> getAllCateg(int aukcji){return this.arepo.getAllCateg(aukcji);}
+    public void addNewOffer(int id_uzytk,int ilosc,int id_aukcji){this.arepo.addNewOffer(id_uzytk,ilosc,id_aukcji);}
 }

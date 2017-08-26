@@ -12,6 +12,8 @@ public class Off {
     private int id_aukcji;
     private String data_oferty;
     private String login;
+    private double kwota;
+    private int ilosc;
 
     public int getId_oferty() {
         return id_oferty;
@@ -53,13 +55,31 @@ public class Off {
         this.login = login;
     }
 
-    public Off(int id_oferty, int id_uzytk, int id_aukcji, String data_oferty, String login) {
+    public double getKwota() {
+        return kwota;
+    }
+
+    public void setKwota(double kwota) {
+        this.kwota = kwota;
+    }
+
+    public int getIlosc() {
+        return ilosc;
+    }
+
+    public void setIlosc(int ilosc) {
+        this.ilosc = ilosc;
+    }
+
+    public Off(int id_oferty, int id_uzytk, int id_aukcji, String data_oferty, String login, double kwota, int ilosc) {
 
         this.id_oferty = id_oferty;
         this.id_uzytk = id_uzytk;
         this.id_aukcji = id_aukcji;
         this.data_oferty = data_oferty;
         this.login = login;
+        this.kwota = kwota;
+        this.ilosc = ilosc;
     }
 
     public Off() {
