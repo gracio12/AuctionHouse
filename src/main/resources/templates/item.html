@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragmenty/head :: head"></th:block> /*/-->
+
+</head>
+<body>
+<div class="site-wrapper bg-inverse">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <!--/*/ <th:block th:include="fragmenty/nav :: nav"></th:block> /*/-->
+
+            <div class="inner cover">
+                <div class="centered">
+                        <div class="col-lg-6 col-xs-12">
+                            <div class="row">
+                            <h1><span th:text="${auk[0].nazwa}"></span></h1>
+                            </div>
+                            <div class="row">
+                            <img src="http://placehold.it/320x200"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xs-12">
+                            <div class="row"> <input type="text" th:value="${auk[0].ilosc}"></input></div>
+                            <div class="row">
+                                <button th:if="${session.User} != null" class="btn btn-warning" value="Kup teraz">Kup teraz</button>
+                                <span th:if="${session.User} == null">Zaloguj się aby wykonać akcje.</span>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <h3><span th:text="${auk[0].data}"></span></h3>
+                            </div>
+                        </div>
+                </div>
+                <div class="centered">
+                    <div class="col-lg-12 col-xs-12">
+                        <table>
+                            <tr>
+                                Parametry
+                            </tr>
+                            <td>
+                                jojojo
+                            </td>
+                        </table>
+                    </div>
+                </div>
+                <div class="centered" >
+                    <div class="col-lg-12 col-xs-12" >
+                        <h1 ><span th:text="${auk[0].opis}"></span></h1>
+                    </div>
+                </div>
+                <div class="centered">
+                <div class="col-lg-12 col-xs-12">
+                    <table id="myTable2" class="table table-striped table-inverse table-bordered">
+                        <thead class="thead-default">
+                        <tr>
+                            <th>Użytkownik</th>
+                            <th>Oferta</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ak : ${oferty}">
+
+                            <td><a th:text="${ak.login}">nazwa</a></td>
+                            <td th:text="${ak.data_oferty}">cena</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+
+            <!--/*/ <th:block th:include="fragmenty/footer :: foot"></th:block> /*/-->
+
+        </div>
+    </div>
+</div>
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+</body>
+</html>

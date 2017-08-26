@@ -28,7 +28,7 @@ public class UserController {
     UserController(UserService userService){
         this.userService=userService;
     }
-    @PostMapping(value="/register.try")
+    @PostMapping(value="/register")
     public String register(Model model, User register){
         if(userService.addUserToDataBase(register)){
 
@@ -71,6 +71,17 @@ public class UserController {
         else
             return "error";
     }
-
+    @GetMapping(value = "/edit")
+    public String getUpdate(Model model){
+        return "edit";
+    }
+    @PostMapping(value ="/edit")
+    public String update(User edit,Model model,@SessionAttribute("User")User user,@SessionAttribute("name")String name){
+        this.userService.updateUser(user,edit);
+        name=edit.getImie()+" "+edit.getNazwisko();
+        model.asMap().remove("name");
+        model.addAttribute("name",name);
+        return "redirect:/user/panel";
+    }
 
 }

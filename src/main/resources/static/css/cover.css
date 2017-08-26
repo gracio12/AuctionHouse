@@ -184,3 +184,12 @@ body {
     /* Add a grey background color to the table header and on hover */
     background-color: #f1f1f1;
 }
+
+.centered{
+    padding-top: 50px;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

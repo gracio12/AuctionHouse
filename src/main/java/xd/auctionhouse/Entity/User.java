@@ -83,4 +83,12 @@ public class User {
 
     public User() {
     }
+
+    public void copyUser(User user) {
+        this.imie = user.imie;
+        this.nazwisko = user.nazwisko;
+        this.login = user.login;
+        this.haslo = user.haslo;
+        this.email = user.email;
+    }
 }

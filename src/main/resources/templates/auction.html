@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Allegro</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/cover.css" th:href="@{/css/cover.css}"/>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"/>
-    <script type="text/javascript" charset="utf8" src="../static/js/skrypt.js" th:src="@{/js/skrypt.js}" ></script>
+    <!--/*/ <th:block th:include="fragmenty/head :: head"></th:block> /*/-->
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
 </head>
 <body>
 
@@ -16,76 +10,7 @@
     <div class="site-wrapper-inner">
         <div class="cover-container">
 
-            <div class="masthead clearfix bg-inverse">
-                <div class="inner">
-                    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
-                        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                                aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <a class="navbar-brand" th:href="@{~/index}">Allegro</a>
-                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                            <ul th:if="${session.User} != null" class="navbar-nav">
-                                <li class="nav-item active">
-                                    <a class="nav-link" th:href="@{~/auction/search}">Szukaj <span class="sr-only">(current)</span></a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" th:href="@{~/auction/category}">Kategorie</a>
-                                </li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zalogowany jako
-                                        : <span th:text="${session.name} ?: Niezalogowany ">Niezalogowany</span> <span
-                                                class="caret"></span>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a th:if="${adm}==true" class="dropdown-item" th:href="@{~/user/panel}">Panel
-                                            administratora</a>
-                                        <a class="dropdown-item" th:href="@{~/auction/mysell}">Moja sprzedaż</a>
-                                        <a class="dropdown-item" th:href="@{~/auction/mybuy}">Moje kupno</a>
-                                        <a role="separator" class="divider"></a>
-                                        <a class="dropdown-item" th:href="@{~/user/logout}">Wyloguj</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul th:if="${session.User} == null" class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" th:href="@{~/login}">Zaloguj</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" th:href="@{~/register}">Zarejestruj</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" th:href="@{~/auction/search}">Szukaj <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" th:href="@{~/auction/category}">Kategorie</a>
-                                </li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink"
-                                       aria-haspopup="true" aria-expanded="false">Zalogowany jako
-                                        : Niezalogowany <span class="caret"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
+            <!--/*/ <th:block th:include="fragmenty/nav :: nav"></th:block> /*/-->
 
             <div class="inner cover">
                 <div class="row-sm">
@@ -95,16 +20,16 @@
                         <thead class="thead-default">
                         <tr>
                             <th>#</th>
-                            <th>Nazwa</th>
-                            <th>Do końca</th>
-                            <th>Cena</th>
+                            <th onclick="w3.sortHTML('#myTable','.item', 'td:nth-child(1)')">Nazwa</th>
+                            <!--<th>Do końca</th>-->
+                            <th onclick="w3.sortHTML('#myTable','.item', 'td:nth-child(2)')">Cena</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="ak : ${aukcje}">
+                        <tr th:each="ak : ${aukcje}" class="item">
                             <th width="320" height="200" scope="row"><img src="http://placehold.it/320x200"/></th>
                             <td><a th:text="${ak.nazwa}" th:href="@{/auction/item/} + ${ak.id_aukcji}">nazwa</a></td>
-                            <td th:text="${ak.data}">dokonca</td>
+                            <!--<td th:text="${ak.data}">dokonca</td>-->
                             <td th:text="${ak.cena_aktualna}">cena</td>
                         </tr>
                         </tbody>
@@ -114,17 +39,14 @@
                 </div>
             </div>
 
-            <div class="mastfoot">
-                <div class="inner">
-                    <p>Strona by gracio12</p>
-                </div>
-            </div>
+            <!--/*/ <th:block th:include="fragmenty/footer :: foot"></th:block> /*/-->
 
         </div>
 
     </div>
 
 </div>
+
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"

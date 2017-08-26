@@ -66,11 +66,17 @@ public class UserRepository {
 
 
     public boolean register(User user){
+
         if(this.findUser(user)!=null) {
             data.getJdbcTemplate().update("INSERT into uzytkownik (login,haslo, imie, nazwisko,email,admin) values (?,?,?,?,?,FALSE)"
                     , user.getLogin(), sha512(user.getHaslo(),"powodzenia"), user.getImie(), user.getNazwisko(), user.getEmail());
             return true;
         }
         return false;
+    }
+
+    public void updateUser(User user){
+        this.data.getJdbcTemplate().update("update uzytkownik set imie=?,nazwisko=?,login=?,haslo=?,email=? where id_uzytk=?",
+                user.getImie(),user.getNazwisko(),user.getLogin(),sha512(user.getHaslo(),"powodzenia"),user.getEmail(),user.getId_uzytk());
     }
 }

@@ -23,7 +23,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="ak : ${sprzedaz}">
+                    <tr th:each="ak : ${kupno}">
                         <th width="320" height="200" scope="row"><img src="http://placehold.it/320x200"/></th>
                         <td><a th:text="${ak.nazwa}" th:href="@{/auction/item/} + ${ak.id_aukcji}">nazwa</a></td>
                         <td th:text="${ak.cena_aktualna}">cena</td>

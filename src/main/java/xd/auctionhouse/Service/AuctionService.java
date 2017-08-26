@@ -2,9 +2,7 @@ package xd.auctionhouse.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xd.auctionhouse.Entity.Auction;
-import xd.auctionhouse.Entity.Category;
-import xd.auctionhouse.Entity.Parameter;
+import xd.auctionhouse.Entity.*;
 import xd.auctionhouse.Model.AuctionRepository;
 
 import java.util.List;
@@ -21,8 +19,11 @@ public class AuctionService {
 
     public List<Auction> getAllAuction(){return this.arepo.getAllAuction();}
     public List<Auction> getAllSell(int g){return this.arepo.getAllSell(g);}
+    public List<Auction> getAllBuy(int g){return this.arepo.getAllBuy(g);}
     public List<Category> getAllCat(){return this.arepo.getAllCat();}
     public List<Parameter> getAllCatParam(int id){return this.arepo.getAllCatParam(id);}
     public int addNewAuction(Auction auction,int i,int id){return this.arepo.addNewAuction(auction,i,id);}
-    public void addNewAuctionParam(Parameter parameter,int id,int aukcja){this.arepo.addNewAuctionParam(parameter,id,aukcja);}
+    public void addNewAuctionParam(Parameter parameter, String kater, int aukcja){this.arepo.addNewAuctionParam(parameter,kater,aukcja);}
+    public List<Off> getAllOff(int aukcja){return this.arepo.getAllOff(aukcja);}
+    public List<Auction> getAuction(int id){return this.arepo.getAuction(id);}
 }

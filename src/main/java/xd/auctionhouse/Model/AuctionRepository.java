@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import xd.auctionhouse.Entity.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -13,6 +14,7 @@ import java.util.*;
 public class AuctionRepository {
 
     private DatabaseConnection data;
+
 
     public AuctionRepository(DatabaseConnection databaseConnection){
         this.data=databaseConnection;
@@ -44,6 +46,25 @@ public class AuctionRepository {
             obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
             obiekt.setData(String.valueOf((tabWierszy.get("do_konca"))));
             obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
+            ListaObiektow.add(obiekt);
+        }
+        return ListaObiektow;
+    }
+    public List<Auction> getAllBuy(int g) {
+        String query = "select a.id_aukcji, a.nazwa, a.opis, a.do_konca,a.cena_aktualna,a.ilosc from aukcja a\n" +
+                "JOIN oferta o ON o.id_aukcji=a.id_aukcji\n" +
+                "where o.id_uzytk="+g+";";
+        List<Auction> ListaObiektow = new ArrayList<Auction>();
+        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        for (Map tabWierszy : wiersze) {
+            Auction obiekt = new Auction();
+            obiekt.setId_aukcji(Integer.parseInt(String.valueOf(tabWierszy.get("id_aukcji"))));
+            obiekt.setNazwa(String.valueOf(tabWierszy.get("nazwa")));
+            obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
+            obiekt.setData(dateFormat.format(tabWierszy.get("do_konca")));
+            obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
+            obiekt.setIlosc(Integer.parseInt(String.valueOf(tabWierszy.get("ilosc"))));
             ListaObiektow.add(obiekt);
         }
         return ListaObiektow;
@@ -83,12 +104,43 @@ public class AuctionRepository {
         return data.getJdbcTemplate().queryForObject(sql, Integer.class);
     }
 
-
-
-    // do zrobienia pętla która doda dużo parametrów albo nwm coś w tym stylu
-    public void addNewAuctionParam(Parameter param,int id,int aukcja){
-        data.getJdbcTemplate().update("INSERT into aukcja (nazwa,opis,cena_aktualna,do_konca,ilosc,id_uzytk,kategoria) values (?,?,?,?,?,?,?)"
-                , param.getNazwa(),id);
+    public void addNewAuctionParam(Parameter param,String kater,int aukcja){
+        data.getJdbcTemplate().update("INSERT into podkategoria (id_par,id_auk,opis) values (?,?,?)"
+                , param.getId_param(),aukcja,kater);
     }
 
+    public List<Off> getAllOff(int aukcja){
+        String query = "select o.id_uzytk,o.data_oferty,u.login from oferta o\n" +
+                "LEFT JOIN uzytkownik u on o.id_uzytk = u.id_uzytk\n" +
+                "where o.id_aukcji="+aukcja+";";
+        List<Off> ListaObiektow = new ArrayList<>();
+        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        for (Map tabWierszy : wiersze) {
+            Off obiekt = new Off();
+            obiekt.setId_uzytk(Integer.parseInt(String.valueOf(tabWierszy.get("id_uzytk"))));
+            obiekt.setData_oferty(dateFormat.format((tabWierszy.get("data_oferty"))));
+            obiekt.setLogin(String.valueOf(tabWierszy.get("login")));
+            ListaObiektow.add(obiekt);
+        }
+        return ListaObiektow;
+    }
+    public List<Auction> getAuction(int id){
+        String query = "select a.id_aukcji, a.nazwa, a.opis, a.do_konca,a.cena_aktualna,a.ilosc from aukcja a\n" +
+                "where a.id_aukcji="+id+";";
+        List<Auction> ListaObiektow = new ArrayList<Auction>();
+        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        for (Map tabWierszy : wiersze) {
+            Auction obiekt = new Auction();
+            obiekt.setId_aukcji(Integer.parseInt(String.valueOf(tabWierszy.get("id_aukcji"))));
+            obiekt.setNazwa(String.valueOf(tabWierszy.get("nazwa")));
+            obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
+            obiekt.setData(dateFormat.format(tabWierszy.get("do_konca")));
+            obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
+            obiekt.setIlosc(Integer.parseInt(String.valueOf(tabWierszy.get("ilosc"))));
+            ListaObiektow.add(obiekt);
+        }
+        return ListaObiektow;
+    }
 }

@@ -19,36 +19,39 @@ function myFunction() {
     }
 }
 
-if (window.self !== window.top && window.name!="view1") {;
-    window.alert = function(){/*disable alert*/};
-    window.confirm = function(){/*disable confirm*/};
-    window.prompt = function(){/*disable prompt*/};
-    window.open = function(){/*disable open*/};
-}
-
-// prevent href=# click jump
-document.addEventListener("DOMContentLoaded", function() {
-    var links = document.getElementsByTagName("A");
-    for(var i=0; i < links.length; i++) {
-        if(links[i].href.indexOf('#')!=-1) {
-            links[i].addEventListener("click", function(e) {
-                console.debug("prevent href=# click");
-                if (this.hash) {
-                    if (this.hash=="#") {
-                        e.preventDefault();
-                        return false;
-                    }
-                    else {
-                        /*
-                         var el = document.getElementById(this.hash.replace(/#/, ""));
-                         if (el) {
-                         el.scrollIntoView(true);
-                         }
-                         */
-                    }
+function sortTable(n) {
+    var table, rows, switching,o, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+        switching = false;
+        rows = table.getElementsByTagName("TR");
+        for (i = 1; (rows.length - 1) > i ; i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch= true;
+                    break;
                 }
-                return false;
-            })
+            } else if (dir == "desc") {
+                if (y.innerHTML.toLowerCase() > x.innerHTML.toLowerCase()) {
+                    shouldSwitch= true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
         }
     }
-}, false);
+}

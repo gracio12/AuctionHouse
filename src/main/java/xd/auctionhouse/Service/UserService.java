@@ -19,6 +19,19 @@ public class UserService {
         this.repo=userRepository;
     }
     public boolean addUserToDataBase(User user) {
+        List<User> list = this.repo.findUser(user);
+        for (User us: list) {
+            if(us.getLogin().equals(user.getLogin())){
+                return false;
+            }
+        }
+            if(user.getHaslo().length()<8){
+                return false;
+            }
+            if(!user.getEmail().contains("@")){
+                return false;
+            }
+
         return repo.register(user);
     }
     public User login(User user){
@@ -29,5 +42,9 @@ public class UserService {
             }
         }
         return null;
+    }
+    public void updateUser(User user,User edit){
+        user.copyUser(edit);
+        this.repo.updateUser(user);
     }
 }

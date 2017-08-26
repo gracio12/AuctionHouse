@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragmenty/head :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="site-wrapper bg-inverse">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <!--/*/ <th:block th:include="fragmenty/nav :: nav"></th:block> /*/-->
+
+            <div class="inner cover">
+                <center>
+                <form class="login-group" method="post" action="/user/edit">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label for="imie">Imię: </label>
+                                <input th:value="${session.User.imie}" class="form-control" type="text" name="imie" id = "imie" onkeyup = "Validate(this)" placeholder="Wpisz imię" required="required"/>
+                                <div id="errFirst"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label for="nazwisko">Nazwisko: </label>
+                                <input th:value="${session.User.nazwisko}" class="form-control" type="text" name="nazwisko" id = "nazwisko" onkeyup = "Validate(this)" placeholder="Wpisz nazwisko" required="required"/>
+                                <div id="errLast"></div></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label for="email">Email: </label>
+                                <input th:value="${session.User.email}" class="form-control" type="email" name="email" id = "email"  onchange="email_validate(this.value);" required="required"/>
+                                <div class="status" id="status"></div></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label for="login">Nazwa użytkownika:  <small>To będzie Twoja nazwa</small> </label>
+                                <input th:value="${session.User.login}" class="form-control" type="text" name="login" id = "login" onkeyup = "Validate(this)" placeholder="Minimum 6 znaków" required="required"/>
+                                <div id="errLast"></div></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label for="haslo">Hasło: </label>
+                                <input th:value="${session.User.haslo}" name="haslo" type="password" class="form-control inputpass" minlength="4" maxlength="16"  id="haslo" required="required"/></div>
+                            <div class="form-group ">
+                                <div class="col-md-4">
+                                    <input type="submit" class="btn btn-primary btn-lg login-button" value="Zaktualizuj"></input>
+                                </div>
+                            </div>
+                    </div>
+                </form>
+                </center>
+            </div>
+            <!--/*/ <th:block th:include="fragmenty/footer :: foot"></th:block> /*/-->
+
+        </div>
+
+    </div>
+
+</div>
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+</body>
+</html>
