@@ -24,9 +24,9 @@ public class DatabaseConnection {
     public DatabaseConnection(){
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/auctionhouse");
-        driverManagerDataSource.setUsername("postgres");
-        driverManagerDataSource.setPassword("postgres");
+        driverManagerDataSource.setUrl("jdbc:postgresql://tantor.db.elephantsql.com:5432/yhehdrtj");
+        driverManagerDataSource.setUsername("yhehdrtj");
+        driverManagerDataSource.setPassword("0pYOcXgX797ufEgwPObHO1Kh7TcOb6m-");
         this.jdbcTemplate=new JdbcTemplate(driverManagerDataSource);
         this.dataSource = driverManagerDataSource;
     }
