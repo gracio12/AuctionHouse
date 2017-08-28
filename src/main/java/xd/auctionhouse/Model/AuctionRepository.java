@@ -3,9 +3,18 @@ package xd.auctionhouse.Model;
 import org.springframework.stereotype.Repository;
 import xd.auctionhouse.Entity.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 /**
  * Created by OpartyOtaczki on 15.08.2017.
@@ -21,7 +30,7 @@ public class AuctionRepository {
     }
 
     public List<Auction> getAllAuction() {
-        String query = "select id_aukcji, nazwa, opis, cena_aktualna from aukcja;";
+        String query = "select id_aukcji, nazwa, opis, cena_aktualna,obrazek from aukcja;";
         List<Auction> ListaObiektow = new ArrayList<Auction>();
         List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
         for (Map tabWierszy : wiersze) {
@@ -30,13 +39,14 @@ public class AuctionRepository {
             obiekt.setNazwa(String.valueOf(tabWierszy.get("nazwa")));
             obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
             obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
+            obiekt.setObrazek(String.valueOf(tabWierszy.get("obrazek")));
             ListaObiektow.add(obiekt);
         }
         return ListaObiektow;
     }
 
     public List<Auction> getAllSell(int g) {
-        String query = "select id_aukcji, nazwa, opis, do_konca,cena_aktualna from aukcja where id_uzytk=" + g + ";";
+        String query = "select id_aukcji, nazwa, opis, do_konca,cena_aktualna,obrazek from aukcja where id_uzytk=" + g + ";";
         List<Auction> ListaObiektow = new ArrayList<Auction>();
         List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
         for (Map tabWierszy : wiersze) {
@@ -46,13 +56,14 @@ public class AuctionRepository {
             obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
             obiekt.setData(String.valueOf((tabWierszy.get("do_konca"))));
             obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
+            obiekt.setObrazek(String.valueOf(tabWierszy.get("obrazek")));
             ListaObiektow.add(obiekt);
         }
         return ListaObiektow;
     }
 
     public List<Auction> getAllBuy(int g) {
-        String query = "select a.id_aukcji, a.nazwa, a.opis, a.do_konca,a.cena_aktualna,a.ilosc from aukcja a\n" +
+        String query = "select a.id_aukcji, a.nazwa, a.opis, a.do_konca,a.cena_aktualna,a.ilosc,a.obrazek from aukcja a\n" +
                 "JOIN oferta o ON o.id_aukcji=a.id_aukcji\n" +
                 "where o.id_uzytk=" + g + ";";
         List<Auction> ListaObiektow = new ArrayList<Auction>();
@@ -66,6 +77,7 @@ public class AuctionRepository {
             obiekt.setData(dateFormat.format(tabWierszy.get("do_konca")));
             obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
             obiekt.setIlosc(Integer.parseInt(String.valueOf(tabWierszy.get("ilosc"))));
+            obiekt.setObrazek(String.valueOf(tabWierszy.get("obrazek")));
             ListaObiektow.add(obiekt);
         }
         return ListaObiektow;
@@ -115,26 +127,15 @@ public class AuctionRepository {
         return ListaObiektow;
     }
 
-//    public List<Podkategoria> getAllParam(int aukcji){
-//        String query = "select opis from podkategoria where id_auk="+aukcji+";";
-//        List<Podkategoria> ListaObiektow = new ArrayList<Podkategoria>();
-//        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
-//        for (Map tabWierszy : wiersze) {
-//            Podkategoria obiekt = new Podkategoria();
-////            obiekt.setId_par(Integer.parseInt(String.valueOf(tabWierszy.get("id_param"))));
-//            obiekt.setOpis(String.valueOf((tabWierszy.get("opis"))));
-//            ListaObiektow.add(obiekt);
-//        }
-//        return ListaObiektow;
-//    }
+
 
     public int addNewAuction(Auction auction, int i, int id) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_WEEK, auction.getDo_konca());
         Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
-        data.getJdbcTemplate().update("INSERT into aukcja (nazwa,opis,cena_aktualna,do_konca,ilosc,id_uzytk,kategoria) values (?,?,?,?,?,?,?)"
-                , auction.getNazwa(), auction.getOpis(), auction.getCena_aktualna(), timestamp, auction.getIlosc(), i, id);
+        data.getJdbcTemplate().update("INSERT into aukcja (nazwa,opis,cena_aktualna,do_konca,ilosc,id_uzytk,kategoria,obrazek,licytacja) values (?,?,?,?,?,?,?,?,?)"
+                , auction.getNazwa(), auction.getOpis(), auction.getCena_aktualna(), timestamp, auction.getIlosc(), i, id,auction.getObrazek(),auction.isLicytacja());
         String sql = "select MAX(id_aukcji) from aukcja;";
         return data.getJdbcTemplate().queryForObject(sql, Integer.class);
     }
@@ -164,7 +165,7 @@ public class AuctionRepository {
     }
 
     public List<Auction> getAuction(int id) {
-        String query = "select a.id_aukcji, a.nazwa, a.opis, a.do_konca,a.cena_aktualna,a.ilosc,a.zakonczona from aukcja a\n" +
+        String query = "select a.id_aukcji, a.nazwa, a.opis, a.do_konca,a.cena_aktualna,a.ilosc,a.zakonczona,a.licytacja,a.obrazek from aukcja a\n" +
                 "where a.id_aukcji=" + id + ";";
         List<Auction> ListaObiektow = new ArrayList<Auction>();
         List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
@@ -178,6 +179,8 @@ public class AuctionRepository {
             obiekt.setCena_aktualna(Double.parseDouble((String.valueOf(tabWierszy.get("cena_aktualna")))));
             obiekt.setIlosc(Integer.parseInt(String.valueOf(tabWierszy.get("ilosc"))));
             obiekt.setZakonczona(Boolean.parseBoolean(String.valueOf(tabWierszy.get("zakonczona"))));
+            obiekt.setLicytacja(Boolean.parseBoolean(String.valueOf(tabWierszy.get("licytacja"))));
+            obiekt.setObrazek(String.valueOf(tabWierszy.get("obrazek")));
             ListaObiektow.add(obiekt);
         }
         return ListaObiektow;
@@ -203,4 +206,72 @@ public class AuctionRepository {
         }
 
     }
+
+    public void addNewLic(int id_uzytk,int ilosc,double kwota,int id_aukcji){
+        double max_kwota;
+        String sql = "select max(kwota) from oferta where id_aukcji="+id_aukcji+";";
+        String max_kwotaa = data.getJdbcTemplate().queryForObject(sql, String.class);
+        if(max_kwotaa==null){max_kwota=1;}else{
+        sql = "select max(kwota) from oferta where id_aukcji="+id_aukcji+";";
+        max_kwota = data.getJdbcTemplate().queryForObject(sql, Double.class);}
+
+
+        if(kwota>=max_kwota){
+            sql = "update aukcja set cena_aktualna=? where id_aukcji=?";
+            data.getJdbcTemplate().update(sql, kwota, id_aukcji);
+
+            sql="select\n" +
+                    "  CASE when\n" +
+                    "    exists(SELECT *\n" +
+                    "           from oferta\n" +
+                    "           where id_aukcji="+id_aukcji+"\n" +
+                    "                 and id_uzytk="+id_uzytk+")\n" +
+                    "    then '1' else '0'\n" +
+                    "  end;";
+            int k=data.getJdbcTemplate().queryForObject(sql, int.class);
+
+
+
+
+            if(k==1){
+                sql = "update oferta set kwota=? where id_aukcji=? and id_uzytk=?";
+                data.getJdbcTemplate().update(sql, kwota, id_aukcji,id_uzytk);
+            }
+            else{
+                sql = "insert into oferta (id_uzytk, id_aukcji, kwota) VALUES (?,?,?)";
+                data.getJdbcTemplate().update(sql, id_uzytk, id_aukcji, kwota);
+
+            }
+        }
+
+    }
+
+    public String getObrazek(int aukcja){
+        String sql = "select obrazek from aukcja where id_aukcji="+aukcja+";";
+        String obrazek = data.getJdbcTemplate().queryForObject(sql, String.class);
+        return obrazek;
+    }
+    public List<Off> getAllOff2(int aukcja) {
+        String query = "select o.id_uzytk,o.data_oferty,u.login,o.kwota,o.ilosc from oferta o\n" +
+                "LEFT JOIN uzytkownik u on o.id_uzytk = u.id_uzytk\n" +
+                "where o.id_aukcji=" + aukcja + " ORDER BY o.kwota DESC;";
+        List<Off> ListaObiektow = new ArrayList<>();
+        List<Map<String, Object>> wiersze = data.getJdbcTemplate().queryForList(query);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        for (Map tabWierszy : wiersze) {
+            Off obiekt = new Off();
+            obiekt.setId_uzytk(Integer.parseInt(String.valueOf(tabWierszy.get("id_uzytk"))));
+            obiekt.setData_oferty(dateFormat.format((tabWierszy.get("data_oferty"))));
+            obiekt.setLogin(String.valueOf(tabWierszy.get("login")));
+            obiekt.setKwota(Double.parseDouble((String.valueOf(tabWierszy.get("kwota")))));
+            obiekt.setIlosc(Integer.parseInt(String.valueOf(tabWierszy.get("ilosc"))));
+            ListaObiektow.add(obiekt);
+        }
+        return ListaObiektow;
+    }
+    public void updateZakonczenia(){
+        String sql="update aukcja set zakonczona=true where now()>do_konca;";
+        data.getJdbcTemplate().update(sql);
+    }
+
 }

@@ -14,6 +14,8 @@ public class Auction {
     private boolean zakonczona;
     private int ilosc;
     private String data;
+    private String obrazek;
+    private boolean licytacja;
 
     public String getData() {
         return data;
@@ -26,7 +28,24 @@ public class Auction {
     public Auction() {
     }
 
-    public Auction(int id_aukcji, String nazwa, String opis, double cena_aktualna, int do_konca, boolean zakonczona, int ilosc, String data) {
+    public String getObrazek() {
+        return obrazek;
+    }
+
+    public void setObrazek(String obrazek) {
+        this.obrazek = obrazek;
+    }
+
+    public boolean isLicytacja() {
+        return licytacja;
+    }
+
+    public void setLicytacja(boolean licytacja) {
+        this.licytacja = licytacja;
+    }
+
+    public Auction(int id_aukcji, String nazwa, String opis, double cena_aktualna, int do_konca, boolean zakonczona, int ilosc, String data, String obrazek, boolean licytacja) {
+
         this.id_aukcji = id_aukcji;
         this.nazwa = nazwa;
         this.opis = opis;
@@ -35,6 +54,8 @@ public class Auction {
         this.zakonczona = zakonczona;
         this.ilosc = ilosc;
         this.data = data;
+        this.obrazek = obrazek;
+        this.licytacja = licytacja;
     }
 
     public int getId_aukcji() {

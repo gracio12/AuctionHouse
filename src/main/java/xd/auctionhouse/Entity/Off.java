@@ -14,6 +14,15 @@ public class Off {
     private String login;
     private double kwota;
     private int ilosc;
+    private String najwieksza;
+
+    public String getNajwieksza() {
+        return najwieksza;
+    }
+
+    public void setNajwieksza(String najwieksza) {
+        this.najwieksza = najwieksza;
+    }
 
     public int getId_oferty() {
         return id_oferty;
@@ -71,8 +80,7 @@ public class Off {
         this.ilosc = ilosc;
     }
 
-    public Off(int id_oferty, int id_uzytk, int id_aukcji, String data_oferty, String login, double kwota, int ilosc) {
-
+    public Off(int id_oferty, int id_uzytk, int id_aukcji, String data_oferty, String login, double kwota, int ilosc, String najwieksza) {
         this.id_oferty = id_oferty;
         this.id_uzytk = id_uzytk;
         this.id_aukcji = id_aukcji;
@@ -80,6 +88,7 @@ public class Off {
         this.login = login;
         this.kwota = kwota;
         this.ilosc = ilosc;
+        this.najwieksza = najwieksza;
     }
 
     public Off() {

@@ -21,7 +21,7 @@ function myFunction() {
 
 function sortTable(n) {
     var table, rows, switching,o, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("myTable");
+    table = document.getElementById("myTable2");
     switching = true;
     dir = "asc";
     while (switching) {
@@ -55,3 +55,5 @@ function sortTable(n) {
         }
     }
 }
+
+

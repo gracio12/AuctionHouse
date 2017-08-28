@@ -2,7 +2,6 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragmenty/head :: head"></th:block> /*/-->
-
 </head>
 <body>
 <div class="site-wrapper bg-inverse">
@@ -17,13 +16,14 @@
                             <h1><span th:text="${auk[0].nazwa}"></span></h1>
                         </div>
                         <div class="row">
-                            <img src="http://placehold.it/320x200"/>
+                            <!--<img src="http://placehold.it/320x200"/>-->
+                            <img th:src="*{'data:image/png;base64,'+jpg}" alt="Brak obrazka" width="320" height="200"/>
                         </div>
                     </div>
                     <div class="col-lg-6 col-xs-12">
                         <div th:if="${auk[0].zakonczona}!=true">
 
-                            <form action="/auction/addoff" method="post">
+                            <form th:if="${auk[0].licytacja}!=true" action="/auction/addoff" method="post">
                                 <div class="row"><h1><span th:text="${auk[0].cena_aktualna}"></span></h1>
                                     <h1>zł</h1></div>
                                 <div class="row"><input type="text" name="oferta" th:value="${auk[0].ilosc}"></input>
@@ -32,6 +32,27 @@
                                 <div class="row">
                                     <button th:if="${session.User} != null" class="btn btn-warning" value="Kup teraz">
                                         Kup teraz
+                                    </button>
+                                    <span th:if="${session.User} == null">Zaloguj się aby wykonać akcje.</span>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <h3><span th:text="${auk[0].data}"></span></h3>
+                                </div>
+                            </form>
+                            <form th:if="${auk[0].licytacja}==true" action="/auction/licytacja" method="post">
+                                <div class="row"><h1><span th:text="${auk[0].cena_aktualna}"></span></h1>
+                                    <h1>zł</h1></div>
+                                <div class="row">Podaj swoją cene:</div>
+                                <div class="row"><input type="text" th:value="${auk[0].cena_aktualna}" name="licytacja"></input>
+                                </div>
+                                <!--<div class="row">Ilość dostepnych sztuk:<span th:text="${auk[0].ilosc}"></span></div>-->
+                                <!--<div class="row">Podaj ilość:</div>-->
+                                <!--<div class="row"><input type="text" th:value="1" name="oferta"></input>-->
+                                <!--</div>-->
+                                <div class="row">
+                                    <button th:if="${session.User} != null" class="btn btn-primary" value="Licytuj">
+                                        Licytuj
                                     </button>
                                     <span th:if="${session.User} == null">Zaloguj się aby wykonać akcje.</span>
                                 </div>
@@ -75,10 +96,10 @@
 
                     </div>
                 </div>
-                <div class="centered">
+                <div th:if="${auk[0].licytacja}!=true" class="centered">
                     <div class="col-lg-12 col-xs-12">
-
-                        <table id="myTable2" class="table table-striped table-inverse table-bordered">
+                        <!--<button th:onclick="${'javascript:sortTable(1)'}">klik</button>-->
+                        <table id="myTable2" class="table table-striped table-inverse table-bordered" cellspacing="0" width="100%">
                             <thead class="thead-default">
                             <tr>
                                 <th>Użytkownik</th>
@@ -90,6 +111,29 @@
                             <tr th:each="ak : ${oferty}">
 
                                 <td><a th:text="${ak.login}">nazwa</a></td>
+                                <td th:text="${ak.ilosc}">il</td>
+                                <td th:text="${ak.data_oferty}">data</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div th:if="${auk[0].licytacja}==true" class="centered">
+                    <div class="col-lg-12 col-xs-12">
+
+                        <table id="myTable23" class="table table-striped table-inverse table-bordered" cellspacing="0" width="100%">
+                            <thead class="thead-default">
+                            <tr>
+                                <th>Użytkownik</th>
+                                <th>Cena</th>
+                                <th>Ilość</th>
+                                <th>Data oferty</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ak : ${oferty2}">
+                                <td><a th:text="${ak.login}">nazwa</a></td>
+                                <td th:text="${ak.kwota}">il</td>
                                 <td th:text="${ak.ilosc}">il</td>
                                 <td th:text="${ak.data_oferty}">data</td>
                             </tr>

@@ -11,7 +11,7 @@
 
             <div class="inner cover">
                 <div class="row-sm">
-                    <form method="post" action="/auction/add">
+                    <form method="post" enctype="multipart/form-data" action="/auction/add">
                     <h1 class="cover-heading">Dodaj aukcję:</h1>
 
                     <p class="lead">Nazwa aukcji:</p>
@@ -49,9 +49,18 @@
                             </select>
                         </div>
                     </center>
+                        <p class="lead">Typ aukcji:</p>
+                        <center>
+                            <div class="col-md-2">
+                                <select class="form-control" name="licytacja" id="licytacja">
+                                    <option value="true">Licytacja</option>
+                                    <option value="false">Kup teraz</option>
+                                </select>
+                            </div>
+                        </center>
                         <p class="lead">Dodaj miniaturke:</p>
                             <center>
-                            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+                            <input type="file" id="obrazek" name="logo"/>
                             <small id="fileHelp" class="form-text text-muted">Wybierz obrazek dla przedmiotu.</small>
                         </center>
 

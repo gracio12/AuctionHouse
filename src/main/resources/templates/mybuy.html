@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="ak : ${kupno}">
-                        <th width="320" height="200" scope="row"><img src="http://placehold.it/320x200"/></th>
+                        <th width="320" height="200" scope="row"><img th:src="*{'data:image/png;base64,'+ak.obrazek}" alt="Brak obrazka" width="320" height="200"/></th>
                         <td><a th:text="${ak.nazwa}" th:href="@{/auction/item/} + ${ak.id_aukcji}">nazwa</a></td>
                         <td th:text="${ak.cena_aktualna}">cena</td>
                     </tr>
